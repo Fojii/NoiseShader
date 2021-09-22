@@ -17,9 +17,6 @@ Shader "NoiseTest/Visualizer"
 
     #include "UnityCG.cginc"
     #include "Packages/jp.keijiro.noiseshader/Shader/ClassicNoise2D.hlsl"
-    #include "Packages/jp.keijiro.noiseshader/Shader/ClassicNoise3D.hlsl"
-    #include "Packages/jp.keijiro.noiseshader/Shader/SimplexNoise2D.hlsl"
-    #include "Packages/jp.keijiro.noiseshader/Shader/SimplexNoise3D.hlsl"
 
     #if defined(_NOISETYPE_CLASSIC) || defined(_NOISETYPE_PERIODIC)
 
@@ -81,7 +78,7 @@ Shader "NoiseTest/Visualizer"
                 float3 period = float3(s, s, 1.0) * 2.0;
             #else
                 float2 coord = uv * s;
-                float2 period = s * 2.0;
+                float2 period = s;
             #endif
 
             #if defined(_GRADIENT_NUMERICAL)
@@ -98,10 +95,10 @@ Shader "NoiseTest/Visualizer"
                     o += w * float2(vx - v0, vy - v0) / epsilon;
                 #endif
             #else
-                o += NOISE_FUNC(coord, period) * w;
+                o += NOISE_FUNC(coord, period);
             #endif
 
-            s *= 2.0;
+            s *= 2;
             w *= 0.5;
         }
 
